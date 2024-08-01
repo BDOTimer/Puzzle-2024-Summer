@@ -21,7 +21,7 @@ struct  Run
             hero.setOutlineColor(sf::Color(222,0,0));
             hero.setOutlineThickness           (5.f);
 
-            font .loadFromFile  ("c:/windows/fonts/georgia.ttf"); ///<-------!!!
+            font.loadFromFile   ("c:/windows/fonts/georgia.ttf"); ///<-------!!!
 
             text.setFont                (font);
             text.setCharacterSize         (50);
