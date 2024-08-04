@@ -13,7 +13,7 @@
 /// Run
 ///----------------------------------------------------------------------------:
 struct  Run
-{       Run() : window(sf::VideoMode(800, 600), "Lesson")
+{       Run() : window(sf::VideoMode(800, 600), "T01::Hello")
 
         {   hero.setPosition    ( 50, 100          );
             hero.setFillColor   (sf::Color(0,128,0));

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
-		<Project filename="helloSFML/helloSFML.cbp" />
+		<Project filename="Code-Tom-1/T01_helloSFML/helloSFML.cbp" />
+		<Project filename="Code-Tom-1/T02_Interface/T02_Interface.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

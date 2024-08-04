@@ -15,7 +15,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++17" />
-					<Add directory="../../../SFML-2.6.1/include" />
+					<Add directory="../../../../SFML-2.6.1/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -28,7 +28,7 @@
 					<Add library="libfreetype.a" />
 					<Add library="libsfml-system-s.a" />
 					<Add library="libwinmm.a" />
-					<Add directory="../../../SFML-2.6.1/lib" />
+					<Add directory="../../../../SFML-2.6.1/lib" />
 				</Linker>
 			</Target>
 		</Build>
