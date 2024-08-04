@@ -30,6 +30,109 @@
 #define  l(v)  std::wcout << #v << " = " << (v) << "\n";
 
 ///----------------------------------------------------------------------------|
+/// Интерфейс объектов рендера.
+///----------------------------------------------------------------------------:
+namespace Obj
+{
+    ///-------------------------|
+    /// Интерфейс объекта.      |--------------------------------------------!!!
+    ///-------------------------:
+    struct      IObject : sf::Drawable
+    {   virtual~IObject(){}
+        virtual void update   (                        ) = 0;
+        virtual bool RPControl(std::string_view command,
+                               std::vector<float>& arg ) = 0;
+        virtual void input(const sf::Event&       event) = 0;
+
+        std::string_view name;
+
+    private:
+    };
+}
+
+///----------------------------------------------------------------------------|
+/// Переключатель сцен.
+///----------------------------------------------------------------------------:
+struct ManagerScenes
+{
+    enum eSCENES
+    {   E_LOGO,
+        E_GAME,
+        E_NONE
+    };
+
+    void bindScene(eSCENES n, Obj::IObject* o)
+    {   SCENES   = n;
+        (*scene) = o;
+    }
+
+    eSCENES getScene() const { return SCENES; }
+
+    void setPScene(Obj::IObject** pscn) { scene = pscn; }
+
+private:
+    eSCENES SCENES{E_LOGO};
+
+    Obj::IObject** scene = nullptr;
+};
+
+
+///----------------------------------------------------------------------------|
+/// Конфиг.
+///----------------------------------------------------------------------------:
+///---------------------|
+/// Общая часть.        |
+///---------------------:
+struct  Config
+{
+    sf::Vector2i winsize{700 * 1366 / 768, 700};
+
+    sf::Font font;
+
+    sf::View* view[2];
+
+    sf::View& getView_World(){ return *view[0]; }
+    sf::View& getView_GUI  (){ return *view[1]; }
+
+    static inline double deltaTime = 0.0;
+
+    static inline std::string path2res{"../../../../Resources/"};
+
+    static inline const char* filename[]
+    {   "01.jpg",
+        "02.jpg",
+        "photo_2024-08-04_20-24-52.jpg"
+    };
+
+    static std::string getFileName(unsigned n)
+    {   return Config::path2res + filename[n];
+    }
+};
+
+///---------------------|
+/// Игровая часть.      |
+///---------------------:
+struct  ConfigGame : Config
+{
+    ManagerScenes managerScenes;
+
+    std::vector<std::unique_ptr<Obj::IObject>> objs;
+
+    void init()
+    {
+        font.loadFromFile( "c:/windows/fonts/tahoma.ttf");
+
+        ///------------------------------|
+        /// Получаем набор объектов.     |
+        ///------------------------------:
+        extern std::vector<std::unique_ptr<Obj::IObject>> createObjs();
+        objs =                                            createObjs();
+    }
+
+    static inline ConfigGame* p = nullptr;
+};
+
+///----------------------------------------------------------------------------|
 /// Расштопаные примитивы.
 /// (возмжность хранить дополнительные данные внутри себя)
 ///----------------------------------------------------------------------------:
@@ -199,110 +302,9 @@ private:
     Sprite*           sp;
     sf::View        view;
 
-    const sf::Vector2u szr{512,512}; /// Размеры R-текстуры.
-          sf::Vector2u szt;          /// Размеры жпег-картинки.
-};
-
-const char* filename[]
-{   "01.jpg",
-    "02.jpg"
-};
-
-///----------------------------------------------------------------------------|
-/// Интерфейс объектов рендера.
-///----------------------------------------------------------------------------:
-namespace Obj
-{
-    ///-------------------------|
-    /// Интерфейс объекта.      |--------------------------------------------!!!
-    ///-------------------------:
-    struct      IObject : sf::Drawable
-    {   virtual~IObject(){}
-        virtual void update   (                        ) = 0;
-        virtual bool RPControl(std::string_view command,
-                               std::vector<float>& arg ) = 0;
-        virtual void input(const sf::Event&       event) = 0;
-
-        std::string_view name;
-
-    private:
-    };
-}
-
-///----------------------------------------------------------------------------|
-/// Переключатель сцен.
-///----------------------------------------------------------------------------:
-struct ManagerScenes
-{
-    enum eSCENES
-    {   E_LOGO,
-        E_GAME,
-        E_NONE
-    };
-
-    void bindScene(eSCENES n, Obj::IObject* o)
-    {   SCENES   = n;
-        (*scene) = o;
-    }
-
-    eSCENES getScene() const { return SCENES; }
-
-    void setPScene(Obj::IObject** pscn) { scene = pscn; }
-
-private:
-    eSCENES SCENES{E_LOGO};
-
-    Obj::IObject** scene = nullptr;
-};
-
-
-///----------------------------------------------------------------------------|
-/// Конфиг.
-///----------------------------------------------------------------------------:
-///---------------------|
-/// Общая часть.        |
-///---------------------:
-struct  Config
-{
-    sf::Vector2i winsize{700 * 1366 / 768, 700};
-
-    sf::Font font;
-
-    sf::View* view[2];
-
-    sf::View& getView_World(){ return *view[0]; }
-    sf::View& getView_GUI  (){ return *view[1]; }
-
-    static inline double deltaTime = 0.0;
-
-    static inline std::string path2res{"../../../../Resources/"};
-
-    static std::string getFileName(unsigned n)
-    {   return Config::path2res + filename[n];
-    }
-};
-
-///---------------------|
-/// Игровая часть.      |
-///---------------------:
-struct  ConfigGame : Config
-{
-    ManagerScenes managerScenes;
-
-    std::vector<std::unique_ptr<Obj::IObject>> objs;
-
-    void init()
-    {
-        font.loadFromFile( "c:/windows/fonts/tahoma.ttf");
-
-        ///------------------------------|
-        /// Получаем набор объектов.     |
-        ///------------------------------:
-        extern std::vector<std::unique_ptr<Obj::IObject>> createObjs();
-        objs =                                            createObjs();
-    }
-
-    static inline ConfigGame* p = nullptr;
+    const sf::Vector2i szr{ConfigGame::p->winsize.x,
+                           ConfigGame::p->winsize.y}; /// Размеры R-текстуры.
+          sf::Vector2u szt;                          /// Размеры жпег-картинки.
 };
 
 
@@ -343,7 +345,7 @@ struct  SceneLogo   : Obj::IObject, TestA
             name = "SceneLogo";
             text.setString(std::string(name));
 
-            rs.loadTexture(Config::getFileName(0).c_str());
+            rs.loadTexture(Config::getFileName(2).c_str());
         }
 
     ///----------------------|
@@ -493,7 +495,7 @@ private:
 ///----------------------------------------------------------------------------:
 struct  RenderLoop
 {       RenderLoop() : window(sf::VideoMode(ConfigGame::p->winsize.x,
-                                          ConfigGame::p->winsize.y),
+                                            ConfigGame::p->winsize.y),
             "T03::TexturesHolder"),
             fps(cam_ui)
 
