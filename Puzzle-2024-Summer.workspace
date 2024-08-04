@@ -3,5 +3,6 @@
 	<Workspace title="Workspace">
 		<Project filename="Code-Tom-1/T01_helloSFML/helloSFML.cbp" />
 		<Project filename="Code-Tom-1/T02_Interface/T02_Interface.cbp" />
+		<Project filename="Code-Tom-1/T03_TexturesHolder/T03_TexturesHolder.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
