@@ -1,7 +1,7 @@
-#define SFML_STATIC
+п»ї#define SFML_STATIC
 ///----------------------------------------------------------------------------|
 /// ...
-/// отключить консольное окно: -mwindows
+/// РѕС‚РєР»СЋС‡РёС‚СЊ РєРѕРЅСЃРѕР»СЊРЅРѕРµ РѕРєРЅРѕ: -mwindows
 ///----------------------------------------------------------------------------:
 #include <iostream>
 #include <string>
@@ -54,7 +54,7 @@ struct  Run
                 if (event.type == sf::Event::Closed) window.close();
 
                 ///------------------------------------|
-                /// MouseMoved только здесь.           |
+                /// MouseMoved С‚РѕР»СЊРєРѕ Р·РґРµСЃСЊ.           |
                 ///------------------------------------:
                 if (event.type == sf::Event::MouseMoved)
                 {   mouse_pos  =  sf::Mouse::getPosition(window);
