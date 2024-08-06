@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
+		<Project filename="Code-Tom-1/!main-proj/Main_Proj.cbp" />
+		<Project filename="Code-Tom-1/minitest_01/minitest_01/minitest_01.cbp" />
 		<Project filename="Code-Tom-1/T01_helloSFML/helloSFML.cbp" />
 		<Project filename="Code-Tom-1/T02_Interface/T02_Interface.cbp" />
 		<Project filename="Code-Tom-1/T03_TexturesHolder/T03_TexturesHolder.cbp" />

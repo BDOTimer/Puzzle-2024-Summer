@@ -375,8 +375,8 @@ private:
     virtual void draw(sf::RenderTarget& target,
                       sf::RenderStates  states) const
     {
-        target.draw(TestA(*this), states);
         target.draw(         rs , states);
+        target.draw(TestA(*this), states);
 
         target.setView(ConfigGame::p->getView_GUI());
         target.draw(TestA::text , states);
@@ -424,8 +424,8 @@ private:
     virtual void draw(sf::RenderTarget& target,
                       sf::RenderStates  states) const
     {
-        target.draw(TestA(*this), states);
         target.draw(         rs , states);
+        target.draw(TestA(*this), states);
 
         target.setView(ConfigGame::p->getView_GUI());
         target.draw(TestA::text , states);
