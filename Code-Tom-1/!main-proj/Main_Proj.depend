@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1722961573 source:c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\main.cpp
+1722965464 source:c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\main.cpp
 	"scenes\programm.h"
 
-1722964671 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\scenes\programm.h
+1722965945 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\scenes\programm.h
 	"core.h"
 	"config.h"
 	"render.h"
@@ -10,7 +10,7 @@
 1722952998 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\core\core.h
 	"res.h"
 
-1722965236 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\core\res.h
+1722965464 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\!main-proj\code\core\res.h
 	"log.h"
 	"res.h"
 
