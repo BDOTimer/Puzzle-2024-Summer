@@ -6,8 +6,11 @@
 ///----------------------------------------------------------------------------|
 /// Effect_Test_01.
 ///----------------------------------------------------------------------------:
-class   Effect_Test_01 : public IEffect
-{
+struct  Effect_Test_01   : public IEffect
+{       Effect_Test_01() : IEffect("Effect_Test_01")
+        {
+        }
+
     std::string shader_flag
     {
         "uniform sampler2D texture;                                    "
@@ -38,17 +41,11 @@ class   Effect_Test_01 : public IEffect
         "}                                                             "
     };
 
-public:
-
-    Effect_Test_01() : IEffect("Effect_Test_01")
-    {
-    }
-
     bool onLoad()
     {   m_text.setString(L"я class Effect_Test_01;\n");
         m_text.setFont(getFont  ());
         m_text.setCharacterSize(22);
-        m_text.setPosition (30, 20);
+        m_text.setPosition (20, 30);
 
         ///----------------------------------------|
         /// My m_texture.                          |
@@ -58,7 +55,7 @@ public:
         }
 
         m_sprite.setTexture(m_texture );
-        m_sprite.setPosition(50.f, 30.f);
+        m_sprite.setPosition(20.f, 60.f);
 
         if (m_shader.loadFromMemory(       shader_flag,
                                            sf::Shader::Type::Fragment ))
@@ -81,7 +78,7 @@ public:
         target.draw(m_sprite, states);
 
         states.shader = 0;
-        target.draw(m_text       , states);
+        target.draw(m_text  , states);
     }
 
 private:
@@ -97,7 +94,7 @@ private:
 ///----------------------------------------------------------------------------|
 /// Effect_Test_02.
 ///----------------------------------------------------------------------------:
-struct  Effect_Test_02 : public IEffect
+struct  Effect_Test_02                         : public IEffect
 {       Effect_Test_02(const sf::Vector2u& sz) : IEffect("Effect_Test_02")
         {   m_texture.create(sz.x, sz.y);
         }
@@ -106,7 +103,7 @@ struct  Effect_Test_02 : public IEffect
     {   m_text.setString(L"я class Effect_Test_02;\n");
         m_text.setFont(getFont  ());
         m_text.setCharacterSize(22);
-        m_text.setPosition (30, 40);
+        m_text.setPosition (20, 50);
 
         m_sprite.setTexture(m_texture);
         m_sprite.setPosition(0.f, 0.f);
@@ -137,7 +134,6 @@ struct  Effect_Test_02 : public IEffect
     }
 
 private:
-
     sf::Text    m_text   ;
     sf::Shader  m_shader ;
 

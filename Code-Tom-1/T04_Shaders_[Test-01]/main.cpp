@@ -13,13 +13,66 @@
 
 #include "effect_test.h"
 
+const sf::Vector2u WINSIZE{800, 600};
+float deltaTime{0};
+
+///----------------------------------------------------------------------------|
+/// Интерфейс объектов рендера.
+///----------------------------------------------------------------------------:
+namespace Obj
+{
+    struct      IObject : sf::Drawable
+    {   virtual~IObject(){}
+        virtual void update   (                        ) = 0;
+        virtual bool RPControl(std::string_view command,
+                               std::vector<float>& arg ) = 0;
+        virtual void input(const sf::Event&       event) = 0;
+
+        std::string_view name;
+
+    private:
+    };
+}
+
+struct  Shaders_Test : Obj::IObject
+{       Shaders_Test(const sf::RenderWindow& window, const sf::Font& font)
+        {
+            IEffect::setFont(font);
+
+            effects.push_back(new Effect_Test_01);
+            effects.push_back(new Effect_Test_02(window.getSize()));
+
+            for (std::size_t i = 0; i < effects.size(); ++i) effects[i]->load();
+        }
+
+    bool RPControl( std::string_view command,
+                    std::vector<float>& arg ) { return true; }
+    void input(const sf::Event&       event ) {}
+
+    void update()
+    {   for(auto p : effects) p->update(deltaTime, 0, 0);
+    }
+
+private:
+    std::vector<IEffect*> effects;
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    {
+        for(auto p : effects) target.draw(*p);
+    }
+};
+
 ///----------------------------------------------------------------------------|
 /// Run
 ///----------------------------------------------------------------------------:
 struct  Run
-{       Run() : window(sf::VideoMode(800, 600), "T04::Shader_Test-01")
+{       Run() : window(sf::VideoMode(WINSIZE.x,
+                                     WINSIZE.y), "T04::Shader_Test-01")
 
-        {   hero.setPosition    ( 50, 100          );
+        {
+            effects = std::make_unique<Shaders_Test>(window, font);
+
+            hero.setPosition    ( 50, 100          );
             hero.setFillColor   (sf::Color(0,128,0));
             hero.setSize        ({700, 450}        );
             hero.setOutlineColor(sf::Color(222,0,0));
@@ -32,16 +85,6 @@ struct  Run
             text.setStyle    (sf::Text::Regular);
             text.setFillColor(sf::Color::Yellow);
 
-            ///-------------------------------|
-            /// Effects init.                 |
-            ///-------------------------------:
-            IEffect::setFont(font);
-
-            effects.push_back(new Effect_Test_01);
-            effects.push_back(new Effect_Test_02(window.getSize()));
-
-            for (std::size_t i = 0; i < effects.size(); ++i) effects[i]->load();
-
             loop();
         }
 
@@ -50,13 +93,12 @@ struct  Run
     sf::Font           font;
     sf::Text           text;
 
-    ///-------------------------------|
-    /// Effects definition.           |
-    ///-------------------------------:
-    std::vector<IEffect*> effects;
-    std::size_t       current = 0;
+    ///----------------------------------|
+    /// Effects definition.              |
+    ///----------------------------------:
+    std::unique_ptr<Obj::IObject> effects;
 
-    sf::Clock clock;
+    sf::Clock         clock;
 
     void process_mouse(const sf::Vector2i& mouse_pos)
     {   std::string s("Mouse::XY = [");
@@ -70,8 +112,6 @@ struct  Run
         sf::Vector2i mouse_pos;
 
         bool pause = false;
-
-        float deltaTime = 0;
 
         while (window.isOpen())
         {
@@ -92,43 +132,38 @@ struct  Run
                 {   ///------------------------------------------|
                     /// “ак как шейдер один, то не используетс¤. |
                     ///------------------------------------------:
-                switch (event.key.code)
-                {
-                    // Escape key: exit
-                    case sf::Keyboard::Escape:
-                        window.close();
-                        break;
+                    switch (event.key.code)
+                    {
+                        // Escape key: exit
+                        case sf::Keyboard::Escape:
+                            window.close();
+                            break;
 
-                    case sf::Keyboard::Left:
-                        /// ...
-                        break;
+                        case sf::Keyboard::Left:
+                            /// ...
+                            break;
 
-                    case sf::Keyboard::Right:
-                        /// ...
-                        break;
+                        case sf::Keyboard::Right:
+                            /// ...
+                            break;
 
-                    case sf::Keyboard::Space:
-                        pause = !pause;
-                        break;
+                        case sf::Keyboard::Space:
+                            pause = !pause;
+                            break;
 
-                    default:
-                        break;
-                }
+                        default:
+                            break;
+                    }
                 }
             }
 
-            if(!pause)
-            {
-                effects[0]->update(deltaTime, 0, 0);
-                effects[1]->update(deltaTime, 0, 0);
-            }
+            if(!pause) effects->update();
 
             window.clear   ();
             window.draw(hero);
             window.draw(text);
 
-            window.draw(*effects[1]);
-            window.draw(*effects[0]);
+            window.draw(*effects);
 
             window.display ();
 
