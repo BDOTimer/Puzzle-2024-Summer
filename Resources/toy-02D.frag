@@ -69,6 +69,11 @@ void calc()
 bool iscells(in vec2 p) { return mod(p.x, SZCELL) < 1.0 || mod(p.y, SZCELL) < 1.0; }
 bool isaxes (in vec2 p) { return     p.x         == 0.0 ||     p.y         == 0.0; }
 
+bool isshovel_center(in vec2 p)
+{   float  x = abs(p.x - s_mover_x);
+    return x < SZCELL / 2.0 && abs(p.y) < shovel.y / 2.0;
+}
+
 bool isshovel(in vec2 p)
 {   float  x = abs(p.x - s_mover_x);
     return x < shovel.x / 2.0 && abs(p.y) < shovel.y / 2.0 && x > SZCELL / 2.0;
@@ -121,6 +126,7 @@ void mainImage(out vec4 FC, in vec2 fragCoord)
 
          if(isaxes  (   p                         )) FC = vec4(WHITE , 1.0);
     else if(iscells (   p                         )) FC = vec4(GREEN , 1.0);
+    else if(isshovel_center(p                     )) FC = vec4(BLUE  , 1.0);
     else if(isshovel(   p                         )) FC = F + vec4(0.2, 0.2, 0.2, 0.0);
     else if(isemptiness(p                         )) FC = vec4(BLACK , 1.0);
     else if(istrack2(p, r_now_ext, r_now_intro, dd)) FC = vec4(BLUE  , 1.0);
