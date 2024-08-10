@@ -122,7 +122,7 @@ void mainImage(out vec4 FC, in vec2 fragCoord)
     s_mover_x = (s_mover / 2.0) * sin(iTime / 1.0);
 
     vec2 t    = vec2(fragCoord.y, fragCoord.x - s_mover_x) / iResolution.xy;
-    vec4 F    = vec4(texture(iChannel0, t));
+    vec4 F    = texture(iChannel0, t);
 
          if(isaxes  (   p                         )) FC = vec4(WHITE , 1.0);
     else if(iscells (   p                         )) FC = vec4(GREEN , 1.0);
@@ -135,7 +135,7 @@ void mainImage(out vec4 FC, in vec2 fragCoord)
 
 #ifdef DESKTOP_
     void main()
-    {   vec2 fragCoord = vec2(iResolution.xy * gl_TexCoord[0].xy);
+    {   vec2 fragCoord = iResolution.xy * gl_TexCoord[0].xy;
 
         mainImage(gl_FragColor, fragCoord);
     }
