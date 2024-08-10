@@ -39,8 +39,8 @@ struct  Shaders_Test : Obj::IObject
         {
             IEffect::setFont(font);
 
-            effects.push_back(new Effect_Test_01);
-            effects.push_back(new Effect_Test_02(window.getSize()));
+          //effects.push_back(new Effect_Test_01);
+            effects.push_back(new Effect_Test_03(window.getSize()));
 
             for (std::size_t i = 0; i < effects.size(); ++i) effects[i]->load();
         }
@@ -78,7 +78,7 @@ struct  Run
             hero.setOutlineColor(sf::Color(222,0,0));
             hero.setOutlineThickness           (5.f);
 
-            font.loadFromFile   ("../../../../Resources/consola.ttf");
+            font.loadFromFile   (getPath2Res("consola.ttf"));
 
             text.setFont                  (font);
             text.setCharacterSize           (18);
