@@ -8,5 +8,6 @@
 		<Project filename="Code-Tom-1/T03_TexturesHolder/T03_TexturesHolder.cbp" />
 		<Project filename="Code-Tom-1/T04_Shaders_[Test-01]/T04_Shaders_[Test-01].cbp" />
 		<Project filename="Code-Tom-1/T05_Fabric_cutting/T05_FabricCutting_[Test-01].cbp" />
+		<Project filename="Code-Tom-1/T06_Balls/T06_Balls.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

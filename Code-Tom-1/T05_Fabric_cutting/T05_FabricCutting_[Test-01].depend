@@ -434,3 +434,20 @@
 	<cassert>
 	<string>
 
+1723305706 source:c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\t05_fabric_cutting\code\main.cpp
+	<iostream>
+	<cassert>
+	<string>
+	<vector>
+	<memory>
+	<cmath>
+	<SFML/Graphics.hpp>
+	"effect_test.h"
+
+1723311567 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\t05_fabric_cutting\code\effect_test.h
+	"ieffect.h"
+
+1723020986 c:\workcb-2024\!projects\puzzle-2024-summer\code-tom-1\t05_fabric_cutting\code\ieffect.h
+	<cassert>
+	<string>
+
