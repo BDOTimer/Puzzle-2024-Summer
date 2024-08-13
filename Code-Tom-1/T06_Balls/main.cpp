@@ -88,7 +88,8 @@ struct  Config
     {   "01.jpg",
         "02.jpg",
         "photo_2024-08-04_20-24-52.jpg",
-        "ball_red.png"
+        "ball_red.png",
+        "ball_white[4].png"
     };
 
     static std::string getFileName(unsigned n)
@@ -333,32 +334,49 @@ struct  TestA : sf::RectangleShape
 struct  Balls : sf::Drawable
 {       Balls()
         {
-            const auto T = Config::getFileName(3);
+            const auto T = Config::getFileName(4);
 
-            m.push_back(new RenderSprite(T.c_str(), {100,100}));
-            m.push_back(new RenderSprite(T.c_str(), {150,150}));
-            m.push_back(new RenderSprite(T.c_str(), {200,200}));
-            m.push_back(new RenderSprite(T.c_str(), {300,300}));
-            m.push_back(new RenderSprite(T.c_str(), {500,500}));
+            mw.push_back(new RenderSprite(T.c_str(), {100,100}));
+            mw.push_back(new RenderSprite(T.c_str(), {150,150}));
+            mw.push_back(new RenderSprite(T.c_str(), {200,200}));
+            mw.push_back(new RenderSprite(T.c_str(), {250,250}));
+            mw.push_back(new RenderSprite(T.c_str(), {300,300}));
 
-            sf::Vector2f pos{-300, 0};
+            mr.push_back(new RenderSprite(T.c_str(), {100,100}));
+            mr.push_back(new RenderSprite(T.c_str(), {150,150}));
+            mr.push_back(new RenderSprite(T.c_str(), {200,200}));
+            mr.push_back(new RenderSprite(T.c_str(), {250,250}));
+            mr.push_back(new RenderSprite(T.c_str(), {300,300}));
 
-            for(auto& e : m)
-            {
-                e->setPosition(pos); pos.x += 150.f;
+            sf::Vector2f pos{50, 0};
+
+            for(auto& e : mr)
+            {   e->setColor(sf::Color(127,0,0));
+                e->setPosition(pos); pos.x += 100.f;
+            }
+
+            pos.x = 0.f;
+
+            for(auto& e : mw)
+            {   e->setColor(sf::Color(0,1217,0));
+                e->setPosition(pos); pos.x -= 100.f;
             }
         }
        ~Balls()
-        {   for(const auto& e : m) delete e;
+        {   for(const auto& e : mw) delete e;
         }
 
 private:
-    std::list<RenderSprite*> m;
+    std::list<RenderSprite*> mw;
+    std::list<RenderSprite*> mr;
+
+    float a = 0.5f;
 
     virtual void draw(sf::RenderTarget& target,
                       sf::RenderStates  states) const
     {
-        for(const auto& e : m) target.draw(*e , states);
+        for(const auto& e : mr) {e->rotate(-a); target.draw(*e , states);}
+        for(const auto& e : mw) {e->rotate( a); target.draw(*e , states);}
     }
 };
 
