@@ -236,10 +236,11 @@ struct  IResources : Resources
 ///  - R-спрайт рисуется по центру экрана.
 ///----------------------------------------------------------------------------:
 struct  RenderSprite : Sprite
-{       RenderSprite(){}
-        RenderSprite(const char* name, const sf::Vector2i sz) : szr(sz)
-        {   loadTexture(name);
-        }
+{
+    void loadTexture(const char* name, const sf::Vector2i sz)
+    {   szr = sz;
+        loadTexture(name);
+    }
 
     bool loadTexture(const char* name)
     {
@@ -294,9 +295,9 @@ private:
     Sprite*           sp;
     sf::View        view;
 
-    const sf::Vector2i szr{ConfigGame::p->winsize.x,
-                           ConfigGame::p->winsize.y}; /// Размеры R-текстуры.
-          sf::Vector2u szt;                          /// Размеры жпег-картинки.
+    sf::Vector2i szr{ConfigGame::p->winsize.x,
+                     ConfigGame::p->winsize.y}; /// Размеры R-текстуры.
+    sf::Vector2u szt;                          /// Размеры жпег-картинки.
 };
 
 
@@ -331,35 +332,38 @@ struct  TestA : sf::RectangleShape
 ///----------------------------------------------------------------------------|
 /// Шары.
 ///----------------------------------------------------------------------------:
-struct  Balls : sf::Drawable
-{       Balls()
+struct  Balls   : sf::Drawable
+{       Balls() : m(10)
         {
             const auto T = Config::getFileName(4);
 
-            mw.push_back(new RenderSprite(T.c_str(), {100,100}));
-            mw.push_back(new RenderSprite(T.c_str(), {150,150}));
-            mw.push_back(new RenderSprite(T.c_str(), {200,200}));
-            mw.push_back(new RenderSprite(T.c_str(), {250,250}));
-            mw.push_back(new RenderSprite(T.c_str(), {300,300}));
+            size_t i = 0;
 
-            mr.push_back(new RenderSprite(T.c_str(), {100,100}));
-            mr.push_back(new RenderSprite(T.c_str(), {150,150}));
-            mr.push_back(new RenderSprite(T.c_str(), {200,200}));
-            mr.push_back(new RenderSprite(T.c_str(), {250,250}));
-            mr.push_back(new RenderSprite(T.c_str(), {300,300}));
+            for(size_t N = m.size() / 2; i < N; ++i) mw.push_back(&m[i]);
+            for(size_t N = m.size()    ; i < N; ++i) mr.push_back(&m[i]);
 
-            sf::Vector2f pos{50, 0};
+            sf::Vector2i sz {100, 100};
+            sf::Vector2f pos{-60,   0};
 
-            for(auto& e : mr)
-            {   e->setColor(sf::Color(127,0,0));
-                e->setPosition(pos); pos.x += 100.f;
+            for(const auto& e : mw)
+            {   e->loadTexture(T.c_str(), sz);
+                e->setColor   (sf::Color (0,121,0));
+                e->setPosition(pos); pos.x -= 100.f;
+
+                sz.x += 50;
+                sz.y += 50;
             }
 
-            pos.x = 0.f;
+            sz    = {100, 100};
+            pos.x =       60.f;
 
-            for(auto& e : mw)
-            {   e->setColor(sf::Color(0,1217,0));
-                e->setPosition(pos); pos.x -= 100.f;
+            for(const auto& e : mr)
+            {   e->loadTexture(T.c_str(), sz);
+                e->setColor   (sf::Color (200,0,0));
+                e->setPosition(pos); pos.x += 100.f;
+
+                sz.x += 50;
+                sz.y += 50;
             }
         }
        ~Balls()
@@ -369,6 +373,8 @@ struct  Balls : sf::Drawable
 private:
     std::list<RenderSprite*> mw;
     std::list<RenderSprite*> mr;
+
+    std::vector<RenderSprite> m;
 
     float a = 0.5f;
 
