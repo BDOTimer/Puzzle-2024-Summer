@@ -366,9 +366,6 @@ struct  Balls   : sf::Drawable
                 sz.y += 50;
             }
         }
-       ~Balls()
-        {   for(const auto& e : mw) delete e;
-        }
 
 private:
     std::list<RenderSprite*> mw;
