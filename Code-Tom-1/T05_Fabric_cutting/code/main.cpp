@@ -1,7 +1,6 @@
 ﻿#define SFML_STATIC
 ///----------------------------------------------------------------------------|
-/// ...
-/// отключить консольное окно: -mwindows
+/// Tutor-05::Кройка.
 ///----------------------------------------------------------------------------:
 #include <iostream>
 #include <cassert>
@@ -67,7 +66,7 @@ private:
 ///----------------------------------------------------------------------------:
 struct  Run
 {       Run() : window(sf::VideoMode(WINSIZE.x,
-                                     WINSIZE.y), "T04::Shader_Test-01")
+                                     WINSIZE.y), "Tutor-05::Кройка")
 
         {
             effects = std::make_unique<Shaders_Test>(window, font);

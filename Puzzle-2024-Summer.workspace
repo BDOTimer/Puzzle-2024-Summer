@@ -10,5 +10,6 @@
 		<Project filename="Code-Tom-1/T05_Fabric_cutting/T05_FabricCutting_[Test-01].cbp" />
 		<Project filename="Code-Tom-1/T06_Balls/T06_Balls.cbp" />
 		<Project filename="Code-Tom-1/T07_Balls[refact]/T07_Balls[refact].cbp" />
+		<Project filename="Code-Tom-1/T08_Ttajectory[Idea]/T08_Ttajectory[Idea].cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
