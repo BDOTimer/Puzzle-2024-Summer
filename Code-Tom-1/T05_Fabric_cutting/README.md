@@ -1,3 +1,2 @@
 ...
 
-![Screenshot in game 1](../../ScreenShorts/T04-1.gif)
