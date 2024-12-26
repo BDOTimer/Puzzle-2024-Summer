@@ -2,12 +2,7 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="code\main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2283" topLine="81" />
-		</Cursor>
-	</File>
-	<File name="..\..\Resources\toy-02D.frag" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="..\..\Resources\toy-02D.frag" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1643" topLine="36" />
 		</Cursor>
@@ -15,6 +10,11 @@
 	<File name="code\effect_test.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="5838" topLine="134" />
+		</Cursor>
+	</File>
+	<File name="code\main.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2283" topLine="81" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

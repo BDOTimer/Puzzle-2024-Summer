@@ -1,34 +1,37 @@
+#include <algorithm>
 #include <iostream>
+#include <vector>
+#include <iterator>
 
-#define l(v) std::wcout << #v << " = " << (v) << "\n";
-
-struct  Vec2{ int x, y; };
-
-Vec2 U = {120, 120};     /// Верхняя левая точка координаты шахматной доски.
-Vec2 D = {200, 200};     /// Нижняя правая точка координаты шахматной доски.
-
-void check(const Vec2 M) /// Рандомный клик мауса с координатами { M.x, M.y }
-{
-    static std::string bx = {"abcdefgh"};
-    static std::string by = {"12345678"};
-
-    const int Cell = (D.x - U.x) / 8;
-
-    Vec2 B = {M.x - U.x,
-              M.y - U.y};
-
-    unsigned ix = B.x /  Cell;
-    unsigned iy = B.y /  Cell;
-
-    if(ix < 8 && iy < 8)
-    {   std::cout << "Cell::" << bx[ix] << "," << by[iy] << '\n';
+template<typename Consumer>
+void getPermutations(int n, int k, Consumer consume) {
+    if (n < k) {
+        return;
     }
-    else std::cout << "Past the board\n";
+
+    std::vector<bool> bitmask(k, true); // k leading 1's
+    bitmask.resize(n, false); // n-k trailing 0's
+
+    do {
+        std::vector<int> permutation;
+        permutation.reserve(n);
+
+        for (int i = 0; i < n; ++i) {
+            if (bitmask[i]) {
+                permutation.push_back(i);
+            };
+        }
+
+        do {
+            consume(permutation);
+        } while (std::next_permutation(permutation.begin(), permutation.end()));
+
+    } while (std::prev_permutation(bitmask.begin(), bitmask.end()));
 }
 
-int main()
-{
-    check({121, 121});
-    check({199, 199});
-    check({199, 222});
+int main() {
+    getPermutations(10, 5, [](const auto &permutation) {
+        std::copy(permutation.begin(), permutation.end(), std::ostream_iterator<int>(std::cout));
+        std::cout << std::endl;
+    });
 }
